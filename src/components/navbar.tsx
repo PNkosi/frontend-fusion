@@ -26,7 +26,7 @@ export default function Navbar() {
     },
   ];
   return (
-    <div className="relative w-full bg-background h-[10vh] container flex items-center justify-between">
+    <nav className="sticky z-50  top-0 w-full bg-background h-[10vh] container flex items-center justify-between">
       <div className="flex items-center gap-12">
         <Link href={"/"} className="text-foreground font-bold">
           <span className="bg-[#A655F7] text-slate-100 p-2 rounded-xl mr-2">※</span>
@@ -46,6 +46,6 @@ export default function Navbar() {
         <ThemeToggler />
         <Search />
       </div>
-    </div>
+    </nav>
   );
 }

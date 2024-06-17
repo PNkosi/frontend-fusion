@@ -12,41 +12,45 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
-  IconCode,
   IconCopy,
-  IconEye,
-  IconHeart,
   IconHeartFilled,
   IconPalette,
   IconTrash,
-  IconTrashX,
 } from "@tabler/icons-react";
 import Code from "@/components/code";
 import { useEffect, useState } from "react";
 import { getRandomColor } from "@/lib/utils";
 import EmptyData from "@/components/data-empty";
+import CopyButton from "@/components/copy-button";
 
 export default function SolidBackground() {
   const [color, setColor] = useState<string>("#abcd29");
   const [storageColors, setStorageColors] = useState<string[]>([]);
+  const [showStorageColorsInCode, setShowStorageColorsInCode] =
+    useState<boolean>(true);
 
-  let str = "";
-  storageColors.forEach((color) => {
-    return (str += `\t--colorName: ${color};\n`);
+  let str: string = "";
+
+  /*
+    Generates a string consisting of all the colors saved in local storage
+    Omits the "\n" character on the first variable 
+  */
+  storageColors.forEach((color, index) => {
+    return (str += `${index == 0 ? "" : "\n"}\t--colorName: ${color};`);
   });
 
-  const code = `
-/*Generated from FrontendFusion */
-${storageColors.length > 0 ? `
-:root {
+  const code = `/*Generated from FrontendFusion */
+${
+  showStorageColorsInCode
+    ? `:root {
 ${str}
+}`
+    : ""
 }
-`: ''}
 .bg-color {
     background-color: ${color};
 }
 `;
-
 
   useEffect(() => {
     const colors = localStorage.getItem("solidColors");
@@ -91,13 +95,13 @@ ${str}
   return (
     <section className="w-full">
       <div className="grid grid-cols-2 w-full gap-4">
-        <Card>
+        <Card className="bg-transparent border-none">
           <CardHeader>
             <CardTitle>Solid Background Color</CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
-          <CardContent className="space-y-12">
-            <div className="flex items-center justify-between">
+          <CardContent className="space-y-6">
+            <div className="flex items-center justify-between bg-card text-card-foreground p-6 rounded-lg border">
               <div className="flex items-center gap-8">
                 <IconPalette />
                 <p>Choose color</p>
@@ -111,7 +115,7 @@ ${str}
                 </div>
               </div>
               <Button variant="ghost" onClick={toggleFavourite}>
-                <IconHeartFilled className="fill-indigo-600"/>
+                <IconHeartFilled className="fill-indigo-600" />
               </Button>
               <Button
                 onClick={() => {
@@ -124,7 +128,21 @@ ${str}
             </div>
 
             <div className="space-y-4">
-              <p>Your favourite colors</p>
+              <div className="flex items-center justify-between">
+                <p>Your favourite colors</p>
+                <div className="flex items-center gap-2">
+                  <label htmlFor="showInCss">Include in CSS code?</label>
+                  <Input
+                    type="checkbox"
+                    className="h-5 w-5"
+                    id="showInCss"
+                    checked={showStorageColorsInCode}
+                    onChange={() => {
+                      setShowStorageColorsInCode((prev) => !prev);
+                    }}
+                  />
+                </div>
+              </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {storageColors.length === 0 ? (
@@ -135,7 +153,7 @@ ${str}
                   />
                 ) : (
                   storageColors.map((color) => (
-                    <div className="border space-y-4 p-2 group">
+                    <div key={color} className="bg-background border space-y-4 p-2 group">
                       <div
                         style={{ backgroundColor: color }}
                         className={"rounded-xl h-10 w-full"}
@@ -162,32 +180,29 @@ ${str}
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="">
           <Tabs defaultValue="code" className="flex-1">
             <CardHeader>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="preview">
-                  Preview
-                </TabsTrigger>
-                <TabsTrigger value="code">
-                   CSS Code
-                </TabsTrigger>
+                <TabsTrigger value="preview">Preview</TabsTrigger>
+                <TabsTrigger value="code">CSS Code</TabsTrigger>
               </TabsList>
               <code className="flex items-center justify-between bg-accent p-2 rounded-lg">
-                Copy CSS code <IconCopy className="cursor-pointer" />
+                Copy CSS code
+                <CopyButton text={code} />
               </code>
             </CardHeader>
 
             <CardContent className="space-y-2">
               <TabsContent value="preview">
                 <div
-                  className={`space-y-2 h-80`}
+                  className={`space-y-2 h-40`}
                   style={{
                     backgroundColor: color,
                   }}
                 />
               </TabsContent>
-              <TabsContent value="code">
+              <TabsContent value="code" className="">
                 <Code language="css" code={code} />
               </TabsContent>
             </CardContent>
