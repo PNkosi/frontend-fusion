@@ -3,8 +3,8 @@ import Sidebar from "./_components/sidebar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "CSS Background Color Generator",
-    description: "Generate beautiful solid, gradients CSS backgrounds",
+    title: "FrontendFusion - Tools",
+    description: "Generate beautiful solid, gradients CSS backgrounds, Color Scheme Generator",
   };
 
 
@@ -14,9 +14,9 @@ export default function ToolsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container md:flex gap-12">
+    <div className="md:flex">
       <Sidebar />
-      <main className="flex-1">{children}</main>
+      <main className="container">{children}</main>
     </div>
   );
 }

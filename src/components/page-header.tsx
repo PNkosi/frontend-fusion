@@ -8,7 +8,7 @@ type Props = {
 
 export default function PageHeader({ title, description, className}: Props) {
   return (
-    <Card className={className}>
+    <Card className={`${className}`}>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

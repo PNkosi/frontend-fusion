@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
-  IconCopy,
   IconHeartFilled,
   IconPalette,
   IconTrash,
@@ -22,6 +21,7 @@ import { useEffect, useState } from "react";
 import { getRandomColor } from "@/lib/utils";
 import EmptyData from "@/components/data-empty";
 import CopyButton from "@/components/copy-button";
+import { Label } from "@/components/ui/label";
 
 export default function SolidBackground() {
   const [color, setColor] = useState<string>("#abcd29");
@@ -93,31 +93,34 @@ ${str}
   };
 
   return (
-    <section className="w-full">
-      <div className="grid grid-cols-2 w-full gap-4">
-        <Card className="bg-transparent border-none">
+    <section className="">
+      <div className="gap-4 flex flex-col md:flex-row">
+        <Card className="bg-transparent">
           <CardHeader>
             <CardTitle>Solid Background Color</CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="flex items-center justify-between bg-card text-card-foreground p-6 rounded-lg border">
-              <div className="flex items-center gap-8">
-                <IconPalette />
-                <p>Choose color</p>
-                <div className="relative rounded-full overflow-hidden h-10 w-10 border-2 flex items-center justify-center">
-                  <Input
-                    className="absolute border-none w-20 h-20 cursor-pointer"
-                    type="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                  />
+            <div className="flex flex-col md:flex-row gap-4 bg-card text-card-foreground p-6 rounded-lg border">
+              <div className="flex justify-between gap-4">
+                <div className="flex items-center gap-8">
+                  <IconPalette />
+                  <p>Choose color</p>
+                  <div className="relative rounded-full overflow-hidden h-10 w-10 border-2 flex items-center justify-center">
+                    <Input
+                      className="absolute border-none w-20 h-20 cursor-pointer"
+                      type="color"
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                    />
+                  </div>
                 </div>
+                <Button variant="outline" onClick={toggleFavourite}>
+                  <IconHeartFilled className="fill-indigo-600" />
+                </Button>
               </div>
-              <Button variant="ghost" onClick={toggleFavourite}>
-                <IconHeartFilled className="fill-indigo-600" />
-              </Button>
               <Button
+                variant={"primary"}
                 onClick={() => {
                   const color = getRandomColor();
                   setColor(color);
@@ -131,7 +134,7 @@ ${str}
               <div className="flex items-center justify-between">
                 <p>Your favourite colors</p>
                 <div className="flex items-center gap-2">
-                  <label htmlFor="showInCss">Include in CSS code?</label>
+                  <Label htmlFor="showInCss">Include in CSS code?</Label>
                   <Input
                     type="checkbox"
                     className="h-5 w-5"
@@ -153,24 +156,27 @@ ${str}
                   />
                 ) : (
                   storageColors.map((color) => (
-                    <div key={color} className="bg-background border space-y-4 p-2 group">
+                    <div
+                      key={color}
+                      className="bg-background border space-y-4 p-2 group"
+                    >
                       <div
                         style={{ backgroundColor: color }}
-                        className={"rounded-xl h-10 w-full"}
+                        className={"rounded-lg h-10 w-full"}
                       >
                         <Button
-                          className="hidden opacity-0 duration-200 group-hover:inline-block group-hover:opacity-100"
+                          className="hidden opacity-0 duration-200 group-hover:flex items-center justify-items-end h-10 w-full group-hover:opacity-100"
                           size={"sm"}
                           onClick={() => {
                             removeColorFromFavourite(color);
                           }}
                         >
-                          <IconTrash />
+                          <IconTrash size={15} />
                         </Button>
                       </div>
                       <div className="flex items-center justify-between">
                         <code>{color}</code>
-                        <IconCopy />
+                        <CopyButton text={color} />
                       </div>
                     </div>
                   ))
@@ -180,14 +186,14 @@ ${str}
           </CardContent>
         </Card>
 
-        <Card className="">
+        <Card className="flex-1">
           <Tabs defaultValue="code" className="flex-1">
             <CardHeader>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="preview">Preview</TabsTrigger>
                 <TabsTrigger value="code">CSS Code</TabsTrigger>
               </TabsList>
-              <code className="flex items-center justify-between bg-accent p-2 rounded-lg">
+              <code className="flex items-center justify-between">
                 Copy CSS code
                 <CopyButton text={code} />
               </code>
@@ -202,7 +208,7 @@ ${str}
                   }}
                 />
               </TabsContent>
-              <TabsContent value="code" className="">
+              <TabsContent value="code">
                 <Code language="css" code={code} />
               </TabsContent>
             </CardContent>
