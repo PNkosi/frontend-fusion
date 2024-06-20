@@ -62,6 +62,7 @@ export default function ImageUploader() {
           <Label htmlFor="file">
             <img
               src={uploadedImage as string}
+              alt="uploaded image"
               className="flex flex-col gap-4 items-center justify-center h-80 aspect-auto w-full"
             />
           </Label>

@@ -99,7 +99,7 @@ export default function ColorSchemeGenerator() {
             </div>
             <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
               {colorScheme.map((color) => (
-                <div
+                <div key={color}
                   style={{ backgroundColor: color }}
                   className="h-20 w-20 rounded-lg border-2"
                 />

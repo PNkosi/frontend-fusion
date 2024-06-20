@@ -25,6 +25,7 @@ export default function ThemeToggler() {
 
   return (
     <Button
+      className='hover:btn-shadow'
       variant="ghost"
       size="sm"
       onClick={handleThemeChange}

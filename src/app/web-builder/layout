@@ -1,0 +1,32 @@
+import React from 'react'
+import { Metadata } from 'next'
+import Sidebar from './_components/sidebar'
+import WebBuilderNavbar from './_components/navbar'
+import ControlPanel from './_components/control-panel'
+
+type Props = {
+    children: React.ReactNode
+}
+
+export const metadata: Metadata = {
+    title: "FrontendFusion - Website Builder",
+    description: "Build a website without writing a single line of code"
+}
+
+
+
+
+const WebBuilderLayout = ({ children }: Props) => {
+    return (
+        <div className='flex'>
+            <Sidebar />
+            <div className='w-[75vw]'>
+                <WebBuilderNavbar />
+                {children}
+            </div>
+            <ControlPanel />
+        </div>
+    )
+}
+
+export default WebBuilderLayout

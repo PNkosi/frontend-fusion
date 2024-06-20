@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { IconBrandFacebook, IconBrandInstagram, IconBrandTwitter, IconCalendar } from '@tabler/icons-react';
+import { IconBrandFacebook, IconBrandInstagram, IconBrandX, IconCalendar } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -38,7 +38,7 @@ const BlogAuthor = ({ className, name, jobTitle, image, date, socials }: Props) 
                     <IconBrandInstagram className='text-indigo-300' size={20} />
                 </Link>
                 <Link href={socials.twitter}>
-                    <IconBrandTwitter className='text-indigo-300' size={20} />
+                    <IconBrandX className='text-indigo-300' size={20} />
                 </Link>
             </div>
         </div>

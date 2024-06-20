@@ -8,6 +8,7 @@ import {
   IconFiles
 } from "@tabler/icons-react";
 import Link from "next/link";import ThemeToggler from "./theme-toggler";
+import { usePathname } from "next/navigation";
 ;
 export default function Navbar() {
   const navItems = [
@@ -32,6 +33,13 @@ export default function Navbar() {
       icon: <IconFiles size={20}/>
     }
   ];
+
+  // Hide the navbar when we are on the web builder page
+  // This is to provide extra room for the builder
+  // const pathname = usePathname()
+  // if (pathname.includes('web-builder')) return null
+
+
   return (
     <nav className="sticky z-50 top-0 bg-background">
       <div className="container h-[10vh] flex items-center justify-between">

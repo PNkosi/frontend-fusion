@@ -12,7 +12,7 @@ export default function ToolsPage() {
                     <CardHeader>
                         <Image className="w-full h-56" src={data.image} alt={data.name} width={100} height={224} priority/>
                         <CardTitle>{data.name}</CardTitle>
-                        <CardDescription>{data.category}</CardDescription>
+                        <CardDescription>{data.description}</CardDescription>
                     </CardHeader>
                     <CardContent>{data.description}</CardContent>
                     <CardFooter>
